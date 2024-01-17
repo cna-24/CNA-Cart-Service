@@ -1,3 +1,8 @@
 # CNA-Cart-Service
-* DB prdukter i korgen
+* DB produkter i korgen
 * Session optional
+
+### Teknologier
+* postgres
+* vercel
+* rest
