@@ -6,6 +6,13 @@ GET {{url}}/cart
 
 ###
 
+GET {{url}}/cart/123
+
+###
+
+
+
+
 POST {{url}}/products
 Content-Type: application/json
 

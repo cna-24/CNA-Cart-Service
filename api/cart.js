@@ -23,6 +23,21 @@ app.get('/', async (req, res) => {
     }
   });
   
+  app.get('/:id', async (req, res) => {
+    const customerId = req.params.id;
+    try {
+      const result = await pool.query('SELECT * FROM products WHERE customerid = $1', [customerId]);
+      if (result.rows.length > 0) {
+        res.json(result.rows);
+    } else {
+        res.status(404).json({error: 'Cart not found'})
+    }
+    } catch (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 app.post('/', async (req, res) => { 
     const { customerid, product, amount, price } = req.body;
 
