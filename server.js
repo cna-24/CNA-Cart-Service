@@ -1,12 +1,15 @@
 const express = require('express');
 const handler = require('./api/cart.js'); 
 const { Pool } = require('pg');
+require('dotenv').config();
 
+
+const db_URL = process.env.DATABASE_URL;
 const app = express();
 const PORT = 3000; // You can use any port number you prefer
 
 const pool = new Pool({
-    connectionString: 'postgres://ytmuhmbc:adLoNj8ij2AGONRi1ZDFchryNETpYVKF@mouse.db.elephantsql.com/ytmuhmbc',
+    connectionString: db_URL,
   });
 
 
