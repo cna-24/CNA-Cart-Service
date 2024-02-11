@@ -1,0 +1,17 @@
+
+@url = http://localhost:3000
+
+
+GET {{url}}/cart
+
+###
+
+POST {{url}}/products
+Content-Type: application/json
+
+{
+    "customerid": "124",
+    "product": "kamel",
+    "amount": 1,
+    "price": 12
+}
