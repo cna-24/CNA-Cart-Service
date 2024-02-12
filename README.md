@@ -6,8 +6,7 @@
 * postgres
 * vercel
 * rest
-
-
+* pool
 
 npm init 
 
@@ -23,3 +22,5 @@ git config --global user.name "emmebroman"
 npm run vercel dev
 
 npm i @vercel/postgres
+
+node server.js (localhost)
