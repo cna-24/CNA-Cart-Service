@@ -13,12 +13,12 @@ GET {{url}}/cart/123
 
 
 
-POST {{url}}/products
+POST {{url}}/cart
 Content-Type: application/json
 
 {
-    "customerid": "124",
+    "customerid": "1001",
     "product": "kamel",
-    "amount": 1,
-    "price": 12
+    "amount": 3,
+    "price": 150
 }
