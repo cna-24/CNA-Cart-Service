@@ -2,11 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 require('dotenv').config();
 const app = express();
-
-
-
 const db_URL = process.env.DATABASE_URL;
-
 
 const pool = new Pool({
     connectionString: db_URL,
@@ -17,6 +13,7 @@ app.get('/', async (req, res) => {
     try {
       const result = await pool.query('SELECT * FROM products');
       res.json(result.rows);
+      
     } catch (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
