@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/0ba64087-fea9-4be0-b010-4177e81a4655/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cartserviceem",
+    "appService.deploySubpath": "."
+}
