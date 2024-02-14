@@ -4,23 +4,24 @@
 
 ### Teknologier
 * postgres
-* vercel
+* vercel (bytt till Azure)
 * rest
 * pool
 
-npm init 
+## Cart Service Endpoint
+* https://cartserviceem.azurewebsites.net/cart
+* Enskild produkt
+  * https://cartserviceem.azurewebsites.net/cart/123
 
-npm i -g vercel
 
- npm run vercel
+### Teminal kommandon
+* npm init 
+* npm i -g vercel
+* npm run vercel
+* npm run vercel dev
+* npm i @vercel/postgres
+* node server.js (localhost)
+* git commit -m "initial commit"
+* git config --global user.email "bromanem@arcada.fi"
+* git config --global user.name "emmebroman"
 
-git commit -m "initial commit"
-
-git config --global user.email "bromanem@arcada.fi"
-git config --global user.name "emmebroman"
-
-npm run vercel dev
-
-npm i @vercel/postgres
-
-node server.js (localhost)
