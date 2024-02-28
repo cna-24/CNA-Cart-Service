@@ -1,24 +1,44 @@
 
-@url = http://localhost:3000
+@url = http://localhost:8080/cart
+//@url = https://cartserviceem.azurewebsites.net/cart
 
 
-GET {{url}}/cart
-
-###
-
-GET {{url}}/cart/123
+GET {{url}}
 
 ###
 
+GET {{url}}/1
+
+###
 
 
 
-POST {{url}}/cart
+
+POST {{url}}/
 Content-Type: application/json
 
 {
-    "customerid": "1001",
+
+    "user_id": 1212,
     "product": "kamel",
-    "amount": 3,
+    "quantity": 3,
     "price": 150
 }
+
+###
+
+
+PATCH {{url}}/6
+Content-Type: application/json
+
+{
+
+    "user_id": 1212,
+    "product": "kamel",
+    "quantity": 4,
+    "price": 150
+}
+
+
+###
+DELETE {{url}}/6
