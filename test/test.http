@@ -1,6 +1,7 @@
 
-@url = http://localhost:8080/cart
-//@url = https://cartserviceem.azurewebsites.net/cart
+//@url = http://localhost:8080/cart
+@url = https://cartserviceem.azurewebsites.net/cart
+@token = {{$dotenv TOKEN}}
 
 
 GET {{url}}
@@ -15,25 +16,27 @@ GET {{url}}/1
 
 
 POST {{url}}/
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
-    "user_id": 1212,
+    "user_id": 12432,
     "product": "kamel",
-    "quantity": 3,
-    "price": 150
+    "quantity": 2,
+    "price": 154
 }
 
 ###
 
 
-PATCH {{url}}/6
+PATCH {{url}}/9
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
-    "user_id": 1212,
+    "user_id": 12432,
     "product": "kamel",
     "quantity": 4,
     "price": 150
@@ -41,4 +44,5 @@ Content-Type: application/json
 
 
 ###
-DELETE {{url}}/6
+DELETE {{url}}/9
+Authorization: Bearer {{token}}
