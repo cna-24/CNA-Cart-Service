@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css" />
     <title>Cart Service</title>
+    <meta
+    name="description"
+    content="SwaggerUI"
+  />
 </head>
 <body>
-    <h1>Cart Service</h1>
-    <a href="/cart">Cart api</a>
+
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" crossorigin></script>
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        url: 'swagger.yaml',
+        dom_id: '#swagger-ui',
+      });
+    };
+  </script>
 </body>
 </html>

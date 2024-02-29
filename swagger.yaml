@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Cart API
+  description: API for managing user shopping carts
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+  - url: https://cartserviceem.azurewebsites.net/
+paths:
+  /cart:
+    get:
+      summary: Retrieve all items in the cart
+      responses:
+        '200':
+          description: A list of items in the cart
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+    post:
+      summary: Add a new item to the cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+      responses:
+        '201':
+          description: Item successfully added to the cart
+  /cart/{id}:
+    get:
+      summary: Retrieve a specific item from the cart by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Details of the specified item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '404':
+          description: Item not found
+    patch:
+      summary: Update an existing item in the cart
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the item to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+      responses:
+        '200':
+          description: Item updated successfully
+        '404':
+          description: Item not found
+    delete:
+      summary: Remove an item from the cart
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the item to remove
+      responses:
+        '204':
+          description: Item successfully removed from the cart
+        '404':
+          description: Item not found
+
+components:
+  schemas:
+    CartItem:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The ID of the user who owns the cart
+        product:
+          type: string
+          description: The name of the product
+        quantity:
+          type: integer
+          description: The quantity of the product in the cart
+          minimum: 1
+        price:
+          type: number
+          format: float
+          description: The price of the product
+      required:
+        - user_id
+        - product
+        - quantity
+        - price

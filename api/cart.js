@@ -33,10 +33,10 @@ app.get('/:id', async (req, res) => {
     //Hämtar cart_id från url
     const cartId = req.params.id;
     try {
-        //Executar eb SQL SELECT query på tabellen för det specifika cart_id
+        //Executar en SQL SELECT query på tabellen för det specifika cart_id
         const result = await pool.query('SELECT id, user_id, products, quantity, price FROM products WHERE id = $1', [cartId]);
 
-        //KOllar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
+        //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
             res.json(result.rows);
         } else {

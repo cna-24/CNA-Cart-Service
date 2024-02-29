@@ -3,10 +3,11 @@
 * Session optional
 
 ### Teknologier
-* postgres
-* vercel (bytt till Azure)
-* rest
-* pool
+* PostgreSQL
+* Azure
+* REST
+* Pool
+* Swagger io
 
 ## Cart Service Endpoint
 * https://cartserviceem.azurewebsites.net/cart
@@ -16,11 +17,7 @@
 
 ### Teminal kommandon
 * npm init 
-* npm i -g vercel
-* npm run vercel
-* npm run vercel dev
-* npm i @vercel/postgres
-* node server.js (localhost)
+* node index.js (localhost)
 * git commit -m "initial commit"
 * git config --global user.email "bromanem@arcada.fi"
 * git config --global user.name "emmebroman"
