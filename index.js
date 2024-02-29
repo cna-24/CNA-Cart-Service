@@ -2,6 +2,7 @@ const express = require('express');
 const handler = require('./api/cart.js');
 const { Pool } = require('pg');
 require('dotenv').config();
+const authorizeToken = require('./middleware/auth.js')
 
 //Skapar en Express applikation
 const app = express();
@@ -24,6 +25,7 @@ app.use('/', express.static(__dirname + '/'))
 
 //Importerar och skapar cart handler för /cart route
 const cart = require('./api/cart.js')
+//app.use('/cart', cart)
 app.use('/cart', cart)
 
 // Startar servern

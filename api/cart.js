@@ -3,6 +3,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 const app = express();
 const db_URL = process.env.DATABASE_URL;
+const authenticateToken = require('../middleware/auth.js')
 
 
 //Connectar till databasen
@@ -16,7 +17,7 @@ app.get('/', async (req, res) => {
     try {
         //Executar en SQL SELECT query på tabellen "products" (tabellen innehåller alla carts) genom att använda pool
         //Get alla kolumner i tabellen, väljer ordning hur dom visas genom att skriva ut kolumnnamnen
-        const result = await pool.query('SELECT id, user_id, products, quantity, price FROM products');
+        const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products');
 
         //Skickar JSON response med result
         res.json(result.rows);
@@ -34,7 +35,7 @@ app.get('/:id', async (req, res) => {
     const cartId = req.params.id;
     try {
         //Executar eb SQL SELECT query på tabellen för det specifika cart_id
-        const result = await pool.query('SELECT id, user_id, products, quantity, price FROM products WHERE id = $1', [cartId]);
+        const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products WHERE id = $1', [cartId]);
 
         //KOllar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
@@ -49,7 +50,7 @@ app.get('/:id', async (req, res) => {
 });
 
 //Executar en POST request till endpointen
-app.post('/', async (req, res) => {
+app.post('/', authenticateToken, async (req, res) => {
     //Hämtar data från request bodyn
     const { user_id, product, quantity, price } = req.body;
 
@@ -66,7 +67,7 @@ app.post('/', async (req, res) => {
     }
 });
 // Hanterar PATCH requests för en specifik cart_id till endpointen
-app.patch('/:id', async (req, res) => {
+app.patch('/:id', authenticateToken, async (req, res) => {
     //Hämtar id från request URL
     const cartId = req.params.id;
     //Hämtar data från request bodyn
@@ -93,7 +94,7 @@ app.patch('/:id', async (req, res) => {
 }
 )
 //Hanterar DELETE request för en specifik cart_id
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', authenticateToken, async (req, res) => {
     //Hämtar cart_id från request url
     const cartId = req.params.id;
 
