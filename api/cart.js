@@ -35,7 +35,7 @@ app.get('/:id', async (req, res) => {
     const cartId = req.params.id;
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
-        const result = await pool.query('SELECT id, user_id, products, quantity, price FROM products WHERE id = $1', [cartId]);
+        const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products WHERE id = $1', [cartId]);
 
         //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {

@@ -21,28 +21,28 @@ Content-Type: application/json
 
 {
 
-    "user_id": 12432,
+    "user_id": 124,
     "product": "kamel",
-    "quantity": 2,
-    "price": 154
+    "quantity": 7,
+    "price": 1544
 }
 
 ###
 
 
-PATCH {{url}}/9
+PATCH {{url}}/13
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
-    "user_id": 12432,
+    "user_id": 124,
     "product": "kamel",
-    "quantity": 4,
-    "price": 150
+    "quantity": 8,
+    "price": 1600
 }
 
 
 ###
-DELETE {{url}}/9
+DELETE {{url}}/13
 Authorization: Bearer {{token}}
