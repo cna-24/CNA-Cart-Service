@@ -10,9 +10,12 @@
 * Swagger io
 
 ## Cart Service Endpoint
-* https://cartserviceem.azurewebsites.net/cart
+* Swagger
+  *  https://cartserviceem.azurewebsites.net/
+* API
+  * https://cartserviceem.azurewebsites.net/cart
 * Enskild produkt
-  * https://cartserviceem.azurewebsites.net/cart/123
+  * https://cartserviceem.azurewebsites.net/cart/1001
 
 
 ### Teminal kommandon
