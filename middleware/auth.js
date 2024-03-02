@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
 
     //Spara användare i req
     req.authUser = authUser
-    req.userId = authUser.sub
+    req.userId = authUser.userId
 
     console.log(authUser)
 

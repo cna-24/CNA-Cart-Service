@@ -27,7 +27,6 @@
 * git config --global user.name "emmebroman"
 
 ### To-do
-* Allow cors i cart
 * Checka att de e rätt userid
-* Userid finns med i jwt så den behöver int vara me i responsen (ta bort från swagger och rest)
 * Ändra product till product_id och så att man kan ha flera products  
+* /cart GET/:userId istället för id

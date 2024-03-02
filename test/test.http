@@ -8,7 +8,7 @@ GET {{url}}
 
 ###
 
-GET {{url}}/2
+GET {{url}}/124
 
 ###
 
@@ -18,29 +18,26 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-
-    "user_id": 1006,
-    "product": "kamel",
-    "quantity": 7,
-    "price": 875
+    "product": "camelz",
+    "quantity": 1,
+    "price": 65
 }
 
 ###
 
 
-PATCH {{url}}/9
+PATCH {{url}}/24
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
-    "user_id": 12432,
-    "product": "kamel",
+    "product": "camelz",
     "quantity": 4,
     "price": 150
 }
 
 
 ###
-DELETE {{url}}/9
+DELETE {{url}}/21
 Authorization: Bearer {{token}}

@@ -30,19 +30,19 @@ app.get('/', async (req, res) => {
 });
 
 //Hanterar GET request för specifik cart_id
-app.get('/:id', async (req, res) => {
-    //Hämtar cart_id från url
-    const cartId = req.params.id;
+app.get('/:userId', authenticateToken, async (req, res) => {
+    //Hämtar userId från jwt
+    const userId = req.userId;
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
         // Tagit bort  user_id från queryn
-        const result = await pool.query('SELECT id, product, quantity, price FROM products WHERE id = $1', [cartId]);
+        const result = await pool.query('SELECT id, product, quantity, price FROM products WHERE user_id = $1', [userId]);
 
         //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
             res.json(result.rows);
         } else {
-            res.status(404).json({ error: 'Cart not found' })
+            res.status(404).json({ error: 'Cart not found', id: userId})
         }
     } catch (error) {
         console.error('Error executing query', error);
@@ -53,11 +53,11 @@ app.get('/:id', async (req, res) => {
 //Executar en POST request till endpointen
 app.post('/', authenticateToken, async (req, res) => {
     //Hämtar data från request bodyn, userId från jwt
-    const { userId, product, quantity, price } = req.body;
+    const {product, quantity, price } = req.body;
 
     try {
         //Executar en SQL INSERT query för att lägga till en ny rad i tabellen "producs"t"
-        const result = await pool.query('INSERT INTO products (user_id, product, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [userId, product, quantity, price]);
+        const result = await pool.query('INSERT INTO products (user_id, product, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [req.userId, product, quantity, price]);
         //Om insättningen lyckas skrivs resultatet ut
         res.status(201).json(result.rows[0]);
 
