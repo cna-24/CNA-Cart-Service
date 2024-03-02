@@ -11,9 +11,12 @@
 * Cors
 
 ## Cart Service Endpoint
-* https://cartserviceem.azurewebsites.net/cart
+* Swagger
+  *  https://cartserviceem.azurewebsites.net/
+* API
+  * https://cartserviceem.azurewebsites.net/cart
 * Enskild produkt
-  * https://cartserviceem.azurewebsites.net/cart/123
+  * https://cartserviceem.azurewebsites.net/cart/1001
 
 
 ### Teminal kommandon
@@ -23,3 +26,8 @@
 * git config --global user.email "bromanem@arcada.fi"
 * git config --global user.name "emmebroman"
 
+### To-do
+* Allow cors i cart
+* Checka att de e rätt userid
+* Userid finns med i jwt så den behöver int vara me i responsen (ta bort från swagger och rest)
+* Ändra product till product_id och så att man kan ha flera products  
