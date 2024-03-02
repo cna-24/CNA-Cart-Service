@@ -3,9 +3,12 @@ const handler = require('./api/cart.js');
 const { Pool } = require('pg');
 require('dotenv').config();
 const authorizeToken = require('./middleware/auth.js')
+const cors = require('cors')
 
 //Skapar en Express applikation
 const app = express();
+
+app.use(cors())
 
 //Bestämmer proten som servern kör på
 const PORT = process.env.PORT || 8080;

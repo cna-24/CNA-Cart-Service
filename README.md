@@ -8,6 +8,7 @@
 * REST
 * Pool
 * Swagger io
+* Cors
 
 ## Cart Service Endpoint
 * https://cartserviceem.azurewebsites.net/cart

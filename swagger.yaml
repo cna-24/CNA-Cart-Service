@@ -21,6 +21,8 @@ paths:
                   $ref: '#/components/schemas/CartItem'
     post:
       summary: Add a new item to the cart
+      security:
+        - JWT: []  # Apply JWT authentication
       requestBody:
         required: true
         content:
@@ -30,6 +32,8 @@ paths:
       responses:
         '201':
           description: Item successfully added to the cart
+        '401':
+          description: Access token is missing or invalid
   /cart/{id}:
     get:
       summary: Retrieve a specific item from the cart by ID
@@ -57,6 +61,8 @@ paths:
             type: string
           required: true
           description: ID of the item to update
+      security:
+        - JWT: []  # Apply JWT authentication
       requestBody:
         required: true
         content:
@@ -68,8 +74,12 @@ paths:
           description: Item updated successfully
         '404':
           description: Item not found
+        '401':
+          description: Access token is missing or invalid
     delete:
       summary: Remove an item from the cart
+      security:
+        - JWT: []
       parameters:
         - in: path
           name: id
@@ -82,6 +92,8 @@ paths:
           description: Item successfully removed from the cart
         '404':
           description: Item not found
+        '401':
+          description: Access token is missing or invalid
 
 components:
   schemas:
@@ -107,3 +119,7 @@ components:
         - product
         - quantity
         - price
+  securitySchemes:
+    JWT:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer

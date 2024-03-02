@@ -19,8 +19,8 @@ app.get('/', async (req, res) => {
         //Get alla kolumner i tabellen, väljer ordning hur dom visas genom att skriva ut kolumnnamnen
         const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products');
 
-        //Skickar JSON response med result
-        res.json(result.rows);
+        //Skickar JSON response med result, tar bort user_id från responsen
+        res.json(result.rows.map(({ user_id, ...rest}) => rest));
 
         //Felhantering
     } catch (error) {
@@ -35,7 +35,8 @@ app.get('/:id', async (req, res) => {
     const cartId = req.params.id;
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
-        const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products WHERE id = $1', [cartId]);
+        // Tagit bort  user_id från queryn
+        const result = await pool.query('SELECT id, product, quantity, price FROM products WHERE id = $1', [cartId]);
 
         //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
@@ -51,12 +52,12 @@ app.get('/:id', async (req, res) => {
 
 //Executar en POST request till endpointen
 app.post('/', authenticateToken, async (req, res) => {
-    //Hämtar data från request bodyn
-    const { user_id, product, quantity, price } = req.body;
+    //Hämtar data från request bodyn, userId från jwt
+    const { userId, product, quantity, price } = req.body;
 
     try {
         //Executar en SQL INSERT query för att lägga till en ny rad i tabellen "producs"t"
-        const result = await pool.query('INSERT INTO products (user_id, product, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [user_id, product, quantity, price]);
+        const result = await pool.query('INSERT INTO products (user_id, product, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [userId, product, quantity, price]);
         //Om insättningen lyckas skrivs resultatet ut
         res.status(201).json(result.rows[0]);
 
