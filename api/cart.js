@@ -11,9 +11,11 @@ const pool = new Pool({
     connectionString: db_URL,
 });
 
-
+//Lämnar kvar ifall de behövs i nåt skede
+/*
 //Hanterar GET request till endpointen
-app.get('/', async (req, res) => {
+app.get('/', authenticateToken, async (req, res) => {
+
     try {
         //Executar en SQL SELECT query på tabellen "products" (tabellen innehåller alla carts) genom att använda pool
         //Get alla kolumner i tabellen, väljer ordning hur dom visas genom att skriva ut kolumnnamnen
@@ -27,16 +29,16 @@ app.get('/', async (req, res) => {
         console.error('Error executing query', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-});
+});*/
 
 //Hanterar GET request för specifik cart_id
-app.get('/:userId', authenticateToken, async (req, res) => {
+app.get('/', authenticateToken, async (req, res) => {
     //Hämtar userId från jwt
     const userId = req.userId;
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
         // Tagit bort  user_id från queryn
-        const result = await pool.query('SELECT id, product, quantity, price FROM products WHERE user_id = $1', [userId]);
+        const result = await pool.query('SELECT id, product_id, quantity, price FROM products WHERE user_id = $1', [userId]);
 
         //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
@@ -57,7 +59,7 @@ app.post('/', authenticateToken, async (req, res) => {
 
     try {
         //Executar en SQL INSERT query för att lägga till en ny rad i tabellen "producs"t"
-        const result = await pool.query('INSERT INTO products (user_id, product, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [req.userId, product, quantity, price]);
+        const result = await pool.query('INSERT INTO products (user_id, product_id, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [req.userId, product, quantity, price]);
         //Om insättningen lyckas skrivs resultatet ut
         res.status(201).json(result.rows[0]);
 
@@ -72,13 +74,13 @@ app.patch('/:id', authenticateToken, async (req, res) => {
     //Hämtar id från request URL
     const cartId = req.params.id;
     //Hämtar data från request bodyn
-    const { user_id, product, quantity, price } = req.body;
+    const {product, quantity, price } = req.body;
 
     try {
         //Executar en SQL  UPDATE query för att uppdatera raden för den specifika id:n i tabellen "products"
         const result = await pool.query(
-            'UPDATE products SET user_id = $1, product = $2, quantity = $3, price = $4 WHERE id = $5 RETURNING *',
-            [user_id, product, quantity, price, cartId]
+            'UPDATE products SET user_id = $1, product_id = $2, quantity = $3, price = $4 WHERE id = $5 RETURNING *',
+            [req.userId, product, quantity, price, cartId]
         );
         //Om ingen rad hittades
         if (result.rows.length === 0) {
@@ -102,6 +104,32 @@ app.delete('/:id', authenticateToken, async (req, res) => {
     try {
         //Executar en SQL DELETE query för den specifika cart_id i tabellen "products"
         const result = await pool.query('DELETE FROM products WHERE id = $1', [cartId]);
+
+        //Ifall ingen rad hittas
+        if (result.rowCount === 0) {
+
+            return res.status(404).json({ error: 'Cart not found' });
+        }
+        //Om borttagningen lyckades
+        res.json({ message: 'Cart deleted successfully' });
+
+        //Felhantering
+    } catch (error) {
+        console.error('Error deleting cart from the database:', error);
+        res.status(500).json({ error: 'Internal server error' });
+
+    }
+
+})
+
+//Hanterar DELETE request för en users hela cart
+app.delete('/', authenticateToken, async (req, res) => {
+    //Hämtar cart_id från request url
+
+
+    try {
+        //Executar en SQL DELETE query för den specifika cart_id i tabellen "products"
+        const result = await pool.query('DELETE FROM products WHERE user_id = $1', [req.userId]);
 
         //Ifall ingen rad hittas
         if (result.rowCount === 0) {

@@ -1,15 +1,15 @@
 
-@url = http://localhost:8080/cart
-#@url = https://cartserviceem.azurewebsites.net/cart
+//@url = http://localhost:8080/cart
+@url = https://cartserviceem.azurewebsites.net/cart
 @token = {{$dotenv TOKEN}}
 
 
 GET {{url}}
-
+Authorization: Bearer {{token}}
 ###
 
-GET {{url}}/124
-
+GET {{url}}/123
+Authorization: Bearer {{token}}
 ###
 
 
@@ -18,7 +18,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "product": "camelz",
+    "product": 121234,
     "quantity": 1,
     "price": 65
 }
@@ -26,18 +26,23 @@ Content-Type: application/json
 ###
 
 
-PATCH {{url}}/24
+PATCH {{url}}/39
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
-    "product": "camelz",
+    "product": 2332,
     "quantity": 4,
     "price": 150
 }
 
 
-###
-DELETE {{url}}/21
+
+###Delete en rad / produkt från carten
+DELETE {{url}}/39
+Authorization: Bearer {{token}}
+
+###Delete en hela kunds cart
+DELETE {{url}}/
 Authorization: Bearer {{token}}
