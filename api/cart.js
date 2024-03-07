@@ -34,11 +34,12 @@ app.get('/', authenticateToken, async (req, res) => {
 //Hanterar GET request för specifik cart_id
 app.get('/', authenticateToken, async (req, res) => {
     //Hämtar userId från jwt
-    const userId = req.userId;
+    const userId = req.authUser.user_id;
+    
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
         // Tagit bort  user_id från queryn
-        const result = await pool.query('SELECT id, product_id, quantity, price FROM products WHERE user_id = $1', [userId]);
+        const result = await pool.query('SELECT product_id, quantity, price FROM products WHERE user_id = $1', [userId]);
 
         //Kollar om det finns ett resultat, isåfall skrivs result ut, annars skrivs ett felmeddelande ut
         if (result.rows.length > 0) {
@@ -54,12 +55,14 @@ app.get('/', authenticateToken, async (req, res) => {
 
 //Executar en POST request till endpointen
 app.post('/', authenticateToken, async (req, res) => {
+    
+    const userId = req.authUser.user_id;
     //Hämtar data från request bodyn, userId från jwt
     const {product, quantity, price } = req.body;
 
     try {
         //Executar en SQL INSERT query för att lägga till en ny rad i tabellen "producs"t"
-        const result = await pool.query('INSERT INTO products (user_id, product_id, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [req.userId, product, quantity, price]);
+        const result = await pool.query('INSERT INTO products (user_id, product_id, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *', [userId, product, quantity, price]);
         //Om insättningen lyckas skrivs resultatet ut
         res.status(201).json(result.rows[0]);
 
@@ -69,18 +72,20 @@ app.post('/', authenticateToken, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// Hanterar PATCH requests för en specifik cart_id till endpointen
+// Hanterar PATCH requests för en specifik product_id till endpointen
 app.patch('/:id', authenticateToken, async (req, res) => {
+ 
+    const userId = req.authUser.user_id;
     //Hämtar id från request URL
-    const cartId = req.params.id;
+    const productId = req.params.id;
     //Hämtar data från request bodyn
-    const {product, quantity, price } = req.body;
+    const {quantity, price } = req.body;
 
     try {
         //Executar en SQL  UPDATE query för att uppdatera raden för den specifika id:n i tabellen "products"
         const result = await pool.query(
-            'UPDATE products SET user_id = $1, product_id = $2, quantity = $3, price = $4 WHERE id = $5 RETURNING *',
-            [req.userId, product, quantity, price, cartId]
+            'UPDATE products SET user_id = $1, quantity = $2, price = $3 WHERE product_id = $4 RETURNING *',
+            [userId, quantity, price, productId]
         );
         //Om ingen rad hittades
         if (result.rows.length === 0) {
@@ -98,12 +103,13 @@ app.patch('/:id', authenticateToken, async (req, res) => {
 )
 //Hanterar DELETE request för en specifik cart_id
 app.delete('/:id', authenticateToken, async (req, res) => {
+    const userId = req.authUser.user_id;
     //Hämtar cart_id från request url
-    const cartId = req.params.id;
+    const productId = req.params.id;
 
     try {
         //Executar en SQL DELETE query för den specifika cart_id i tabellen "products"
-        const result = await pool.query('DELETE FROM products WHERE id = $1', [cartId]);
+        const result = await pool.query('DELETE FROM products WHERE product_id = $1 AND user_id = $2 RETURNING *', [productId, userId]);
 
         //Ifall ingen rad hittas
         if (result.rowCount === 0) {
@@ -111,7 +117,7 @@ app.delete('/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'Cart not found' });
         }
         //Om borttagningen lyckades
-        res.json({ message: 'Cart deleted successfully' });
+        res.json({ message: 'Product deleted successfully' });
 
         //Felhantering
     } catch (error) {
@@ -125,11 +131,11 @@ app.delete('/:id', authenticateToken, async (req, res) => {
 //Hanterar DELETE request för en users hela cart
 app.delete('/', authenticateToken, async (req, res) => {
     //Hämtar cart_id från request url
-
+    const userId = req.authUser.user_id;
 
     try {
         //Executar en SQL DELETE query för den specifika cart_id i tabellen "products"
-        const result = await pool.query('DELETE FROM products WHERE user_id = $1', [req.userId]);
+        const result = await pool.query('DELETE FROM products WHERE user_id = $1', [userId]);
 
         //Ifall ingen rad hittas
         if (result.rowCount === 0) {

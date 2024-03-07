@@ -10,6 +10,12 @@ const app = express();
 
 app.use(cors())
 
+
+app.options('*', cors());
+
+// Allow patch 
+app.patch('*', cors());
+
 //Bestämmer proten som servern kör på
 const PORT = process.env.PORT || 8080;
 

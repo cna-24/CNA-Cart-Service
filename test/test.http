@@ -8,17 +8,13 @@ GET {{url}}
 Authorization: Bearer {{token}}
 ###
 
-GET {{url}}/123
-Authorization: Bearer {{token}}
-###
-
 
 POST {{url}}/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "product": 121234,
+    "product": 1234,
     "quantity": 1,
     "price": 65
 }
@@ -26,13 +22,11 @@ Content-Type: application/json
 ###
 
 
-PATCH {{url}}/39
+PATCH {{url}}/124
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-
-    "product": 2332,
     "quantity": 4,
     "price": 150
 }
@@ -40,7 +34,7 @@ Content-Type: application/json
 
 
 ###Delete en rad / produkt från carten
-DELETE {{url}}/39
+DELETE {{url}}/1234
 Authorization: Bearer {{token}}
 
 ###Delete en hela kunds cart
