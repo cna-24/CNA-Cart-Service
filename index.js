@@ -8,13 +8,22 @@ const cors = require('cors')
 //Skapar en Express applikation
 const app = express();
 
-app.use(cors())
 
+// Allow requests from http://localhost:8080
+const corsOptions = {
+  origin: 'http://localhost:8080',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], 
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors());
+/*
+app.use(cors(corsOptions))
 
 app.options('*', cors());
 
 // Allow patch 
-app.patch('*', cors());
+app.patch('*', cors());*/
 
 
 
