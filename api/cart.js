@@ -4,6 +4,9 @@ require('dotenv').config();
 const app = express();
 const db_URL = process.env.DATABASE_URL;
 const authenticateToken = require('../middleware/auth.js')
+const cors = require('cors')
+
+app.use(cors());
 
 
 //Connectar till databasen
