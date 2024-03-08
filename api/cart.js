@@ -34,7 +34,7 @@ app.get('/', authenticateToken, async (req, res) => {
 //Hanterar GET request för specifik cart_id
 app.get('/', authenticateToken, async (req, res) => {
     //Hämtar userId från jwt
-    const userId = req.authUser.user_id;
+    const userId = req.authUser.id;
     
     try {
         //Executar en SQL SELECT query på tabellen för det specifika cart_id
@@ -56,7 +56,7 @@ app.get('/', authenticateToken, async (req, res) => {
 //Executar en POST request till endpointen
 app.post('/', authenticateToken, async (req, res) => {
     
-    const userId = req.authUser.user_id;
+    const userId = req.authUser.id;
     //Hämtar data från request bodyn, userId från jwt
     const {product, quantity, price } = req.body;
 
@@ -75,7 +75,7 @@ app.post('/', authenticateToken, async (req, res) => {
 // Hanterar PATCH requests för en specifik product_id till endpointen
 app.patch('/:id', authenticateToken, async (req, res) => {
  
-    const userId = req.authUser.user_id;
+    const userId = req.authUser.id;
     //Hämtar id från request URL
     const productId = req.params.id;
     //Hämtar data från request bodyn
@@ -103,7 +103,7 @@ app.patch('/:id', authenticateToken, async (req, res) => {
 )
 //Hanterar DELETE request för en specifik cart_id
 app.delete('/:id', authenticateToken, async (req, res) => {
-    const userId = req.authUser.user_id;
+    const userId = req.authUser.id;
     //Hämtar cart_id från request url
     const productId = req.params.id;
 
@@ -131,7 +131,7 @@ app.delete('/:id', authenticateToken, async (req, res) => {
 //Hanterar DELETE request för en users hela cart
 app.delete('/', authenticateToken, async (req, res) => {
     //Hämtar cart_id från request url
-    const userId = req.authUser.user_id;
+    const userId = req.authUser.id;
 
     try {
         //Executar en SQL DELETE query för den specifika cart_id i tabellen "products"
