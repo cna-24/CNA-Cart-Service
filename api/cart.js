@@ -14,26 +14,6 @@ const pool = new Pool({
     connectionString: db_URL,
 });
 
-//Lämnar kvar ifall de behövs i nåt skede
-/*
-//Hanterar GET request till endpointen
-app.get('/', authenticateToken, async (req, res) => {
-
-    try {
-        //Executar en SQL SELECT query på tabellen "products" (tabellen innehåller alla carts) genom att använda pool
-        //Get alla kolumner i tabellen, väljer ordning hur dom visas genom att skriva ut kolumnnamnen
-        const result = await pool.query('SELECT id, user_id, product, quantity, price FROM products');
-
-        //Skickar JSON response med result, tar bort user_id från responsen
-        res.json(result.rows.map(({ user_id, ...rest}) => rest));
-
-        //Felhantering
-    } catch (error) {
-        console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});*/
-
 //Hanterar GET request för specifik cart_id
 app.get('/', authenticateToken, async (req, res) => {
     //Hämtar userId från jwt
@@ -62,6 +42,7 @@ app.post('/', authenticateToken, async (req, res) => {
     const userId = req.authUser.id;
     //Hämtar data från request bodyn, userId från jwt
     const {product, quantity, price } = req.body;
+    
 
     try {
         //Executar en SQL INSERT query för att lägga till en ny rad i tabellen "producs"t"

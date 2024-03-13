@@ -10,13 +10,17 @@ const app = express();
 
 
 // Allow requests from http://localhost:8080
-const corsOptions = {
+/*const corsOptions = {
   origin: 'http://localhost:8080',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
-};
+};*/
 
 app.use(cors());
+
+
+//Middlewares
+app.use(express.json());
 /*
 app.use(cors(corsOptions))
 
@@ -24,9 +28,20 @@ app.options('*', cors());
 
 // Allow patch 
 app.patch('*', cors());*/
+/*
+const allowedOrigins = ['https://thankful-wave-07bc2d81e.4.azurestaticapps.net', 'https://cna-order-service.azurewebsites.net']; //Sätta i env?
 
-
-
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
+*/
 
 //Bestämmer proten som servern kör på
 const PORT = process.env.PORT || 8080;
@@ -39,8 +54,6 @@ const pool = new Pool({
   connectionString: db_URL,
 });
 
-//Middlewares
-app.use(express.json());
 
 app.use('/', express.static(__dirname + '/'))
 
@@ -48,6 +61,8 @@ app.use('/', express.static(__dirname + '/'))
 const cart = require('./api/cart.js')
 //app.use('/cart', cart)
 app.use('/cart', cart)
+
+
 
 // Startar servern
 app.listen(PORT, () => {

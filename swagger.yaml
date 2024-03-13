@@ -51,7 +51,7 @@ paths:
       summary: Update an existing item in the cart
       parameters:
         - in: path
-          name: product_id
+          name: id
           schema:
             type: string
           required: true
@@ -63,7 +63,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchCartItem'
+              $ref: '#/components/schemas/CartItem'
       responses:
         '200':
           description: Item updated successfully
@@ -77,7 +77,7 @@ paths:
         - JWT: []
       parameters:
         - in: path
-          name: product_id
+          name: id
           schema:
             type: string
           required: true
@@ -95,9 +95,9 @@ components:
     CartItem:
       type: object
       properties:
-        product_id:
+        product:
           type: string
-          description: The name of the product
+          description: The id of the product
         quantity:
           type: integer
           description: The quantity of the product in the cart
@@ -107,21 +107,7 @@ components:
           format: float
           description: The price of the product
       required:
-        - product_id
-        - quantity
-        - price
-    PatchCartItem:
-      type: object
-      properties:
-        quantity:
-          type: integer
-          description: The quantity of the product in the cart
-          minimum: 1
-        price:
-          type: number
-          format: float
-          description: The price of the product
-      required:
+        - product
         - quantity
         - price
   securitySchemes:
