@@ -63,7 +63,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CartItem'
+              $ref: '#/components/schemas/PatchCartItem'
       responses:
         '200':
           description: Item updated successfully
@@ -108,6 +108,20 @@ components:
           description: The price of the product
       required:
         - product_id
+        - quantity
+        - price
+    PatchCartItem:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: The quantity of the product in the cart
+          minimum: 1
+        price:
+          type: number
+          format: float
+          description: The price of the product
+      required:
         - quantity
         - price
   securitySchemes:

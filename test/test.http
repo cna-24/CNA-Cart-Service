@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
     "quantity": 2,
-    "price": 15
+    "price": 30
 }
 
 
