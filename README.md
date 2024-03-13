@@ -9,6 +9,7 @@
 * Pool
 * Swagger io
 * Cors
+* JWT
 
 ## Cart Service Endpoint
 * Swagger
@@ -21,12 +22,4 @@
 
 ### Teminal kommandon
 * npm init 
-* node index.js (localhost)
-* git commit -m "initial commit"
-* git config --global user.email "bromanem@arcada.fi"
-* git config --global user.name "emmebroman"
-
-### To-do
-* Checka att de e rätt userid
-* Ändra product till product_id och så att man kan ha flera products  
-* /cart GET/:userId istället för id
+* node index.js (localhost:8080)
