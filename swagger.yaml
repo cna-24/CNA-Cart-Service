@@ -10,6 +10,8 @@ paths:
   /cart:
     get:
       summary: Retrieve all items in the cart
+      security:
+        - JWT: []  # Apply JWT authentication
       responses:
         '200':
           description: A list of items in the cart
@@ -19,6 +21,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CartItem'
+    delete:
+      summary: Remove all items from the cart
+      security:
+        - JWT: []  # Apply JWT authentication
+      responses:
+        '204':
+          description: All items successfully removed from the cart
+        '401':
+          description: Access token is missing or invalid
+
     post:
       summary: Add a new item to the cart
       security:
@@ -35,28 +47,11 @@ paths:
         '401':
           description: Access token is missing or invalid
   /cart/{id}:
-    get:
-      summary: Retrieve a specific item from the cart by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Details of the specified item
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CartItem'
-        '404':
-          description: Item not found
     patch:
       summary: Update an existing item in the cart
       parameters:
         - in: path
-          name: id
+          name: product_id
           schema:
             type: string
           required: true
@@ -82,7 +77,7 @@ paths:
         - JWT: []
       parameters:
         - in: path
-          name: id
+          name: product_id
           schema:
             type: string
           required: true
@@ -100,10 +95,7 @@ components:
     CartItem:
       type: object
       properties:
-        user_id:
-          type: string
-          description: The ID of the user who owns the cart
-        product:
+        product_id:
           type: string
           description: The name of the product
         quantity:
@@ -115,8 +107,7 @@ components:
           format: float
           description: The price of the product
       required:
-        - user_id
-        - product
+        - product_id
         - quantity
         - price
   securitySchemes:

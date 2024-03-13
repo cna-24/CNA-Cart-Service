@@ -14,27 +14,27 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "product": 14,
+    "product": "kamel",
     "quantity": 1,
-    "price": 65
+    "price": 15
 }
 
 ###
 
 
-PATCH {{url}}/14
+PATCH {{url}}/kamel
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "quantity": 4,
-    "price": 150
+    "quantity": 2,
+    "price": 15
 }
 
 
 
 ###Delete en rad / produkt från carten
-DELETE {{url}}/124
+DELETE {{url}}/kamel
 Authorization: Bearer {{token}}
 
 ###Delete en hela kunds cart
