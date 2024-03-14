@@ -89,7 +89,7 @@ paths:
           required: true
           description: ID of the item to remove
       responses:
-        '204':
+        '200':
           description: Item successfully removed from the cart
         '404':
           description: Item not found
